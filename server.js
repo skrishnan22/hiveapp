@@ -7,6 +7,7 @@ var path = require('path');
 var commonLib = require('./commonLib');
 
 var pocketLib = require('./pocketLib');
+var ejs = require('ejs');
 
 const db_url ="mongodb+srv://hiveadmin:UaLsFX6y8RwLPhac@hiveprod-2a2jy.mongodb.net/test?retryWrites=true&w=majority"
 mongoose.connect(db_url,{useNewUrlParser:true});
