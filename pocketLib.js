@@ -27,7 +27,7 @@ exports.pocketRedirect = function(req, res){
                 objReponse = JSON.parse(objReponse);
                 if(objReponse && objReponse.access_token){
                     console.log(objReponse.access_token)
-                    console.log("hive username",  req.username);
+                    console.log("hive username",  req.params.username);
                     res.json(objReponse);
                 }
             })
