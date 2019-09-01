@@ -15,7 +15,7 @@ exports.verifyUserDetails = function(req){
         return userModel.findOne({username: req.query.emailId}).exec()
                 .then(function(objUser){
                     if(objUser && objUser.authCode === req.query.authcode)
-                        return true;
+                        return `/pocketAuthorize/${objUser.username}/${objUser.authCode}`;
                 })
     }
     else{

@@ -25,6 +25,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname,'./landing_assets')));
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname,'./index.html'));
 })
@@ -33,8 +36,8 @@ app.get('/settings', function(req,res){
 
     return commonLib.verifyUserDetails(req)
         .then(function(result){
-            if(result){
-                res.sendFile(path.join(__dirname, './settings.html'));
+            if(data){
+                res.render('settings',{link:data});
             }
             else{
                 res.send("404-sorry not here bruh :)");
