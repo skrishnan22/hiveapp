@@ -1,6 +1,8 @@
 const POCKET_CONSUMER_KEY = '87349-b4690d1647f6d4c4ac967276';
 const POCKET_AUTH_URL = 'https://getpocket.com/auth/authorize';
 const REDIRECT_URI = 'https://gethive.herokuapp.com/pocketRedirect/skrish22195@gmail.com';   
+var url = require('url');
+var request = require('request-promise');
 
 
 exports.pocketRedirect = function(req, res){

@@ -1,11 +1,8 @@
 var express = require('express');
-var request = require('request-promise');
 var bodyParser = require('body-parser');
 var app = express();
 var mongoose = require('mongoose');
-var url = require('url');
 var path = require('path');
-
 
 var commonLib = require('./commonLib');
 
