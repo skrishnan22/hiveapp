@@ -36,8 +36,8 @@ app.get('/settings', function(req,res){
 
     return commonLib.verifyUserDetails(req)
         .then(function(result){
-            if(data){
-                res.render('settings',{link:data});
+            if(result){
+                res.render('settings',{link:result});
             }
             else{
                 res.send("404-sorry not here bruh :)");
