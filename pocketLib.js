@@ -34,15 +34,20 @@ exports.pocketRedirect = function(req, res){
                                 if(objUser){
                                     return res.redirect(`/settings?emailId=${objUser.username}&authcode=${objUser.authCode}`)
                                 }
+                                else{
+                                    return res.render('errorpage');
+                                }
                             })
                 }
+                return res.render('errorpage');
+
             })
 }
 
 
 
 exports.pocketAuthorize = function(req, res){
-    const REDIRECT_URI = `${BASE_REDIRECT_URI}?emailId=${req.params.username}&authcode=${req.params.authcode}`
+    const REDIRECT_URI = `${BASE_REDIRECT_URI}?emailId=${req.params.username}%26authcode=${req.params.authcode}`
     let requestOptions = {
         method: 'POST',
         uri : "https://getpocket.com/v3/oauth/request",
