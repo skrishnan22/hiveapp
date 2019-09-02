@@ -2202,6 +2202,31 @@ a:hover.back-to-top {
 		text-align: center;
 		border-color: turquoise;
 	}
+
+	.register-button {
+		padding: 5px;
+		width : 20%;
+		border-radius: 10px;
+		background-color:#00bfd8;
+		color: white;
+		border-color: #00bfd8;
+		font-weight: bold;
+		margin-left: 5%;
+	}
+
+	.register-button:focus{
+		outline: none;
+	}
+
+	.register-button:hover{
+		background-color: #fff;
+		color: #00bfd8;
+	}
+
+	.highlight{
+		color : #00bfd8;
+		font-weight : bold;
+	}
 	
 }
 /* end of min-width width 1200px */
