@@ -9,7 +9,6 @@ exports.pocketRedirect = function(req, res){
 
     let referer_url = url.parse(req.headers.referer,true);
     let request_token = referer_url.query.request_token;
-    let authCode = referer_url.query.authcode;
     
     let requestOptions = {
         method: 'POST',
@@ -27,9 +26,9 @@ exports.pocketRedirect = function(req, res){
     return request(requestOptions)
             .then(function(objReponse){
                 objReponse = JSON.parse(objReponse);
-                if(objReponse && objReponse.access_token && req.query.emailId && authCode){
+                if(objReponse && objReponse.access_token && req.query.emailId && req.query.authcode){
                     console.log(JSON.stringify(req.query))
-                    return userModel.findOneAndUpdate({username:req.query.emailId, authCode:authCode},{pocketCreds:objReponse},{new:true}).exec()
+                    return userModel.findOneAndUpdate({username:req.query.emailId, authCode:req.query.authcode},{pocketCreds:objReponse},{new:true}).exec()
                             .then(function(objUser){
                                 if(objUser){
                                     return res.redirect(`/settings?emailId=${objUser.username}&authcode=${objUser.authCode}`)
