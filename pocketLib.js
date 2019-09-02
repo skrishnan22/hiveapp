@@ -29,7 +29,7 @@ exports.pocketRedirect = function(req, res){
                 objReponse = JSON.parse(objReponse);
                 if(objReponse && objReponse.access_token && req.query.emailId && authCode){
                     console.log(JSON.stringify(req.query))
-                    return userModel.findOneAndUpdate({username:req.query.emailId, authcode:authCode},{pocketCreds:objReponse},{new:true}).exec()
+                    return userModel.findOneAndUpdate({username:req.query.emailId, authCode:authCode},{pocketCreds:objReponse},{new:true}).exec()
                             .then(function(objUser){
                                 if(objUser){
                                     return res.render('settings',{link:`/pocketAuthorize/${objUser.username}/${objUser.authCode}`})
