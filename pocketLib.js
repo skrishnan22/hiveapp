@@ -32,7 +32,7 @@ exports.pocketRedirect = function(req, res){
                     return userModel.findOneAndUpdate({username:req.query.emailId, authCode:authCode},{pocketCreds:objReponse},{new:true}).exec()
                             .then(function(objUser){
                                 if(objUser){
-                                    return res.redirect(`/settings?emailId=${objUser.username}&authcode=${objUser.authCode}`))
+                                    return res.redirect(`/settings?emailId=${objUser.username}&authcode=${objUser.authCode}`)
                                 }
                             })
                 }
