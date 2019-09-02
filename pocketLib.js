@@ -6,6 +6,7 @@ var request = require('request-promise');
 var userModel = require('./usermodel')
 
 exports.pocketRedirect = function(req, res){
+    console.log(JSON.stringify(req.query));
     let referer_url = url.parse(req.headers.referer,true);
     let request_token = referer_url.query.request_token;
 
