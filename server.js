@@ -38,7 +38,7 @@ app.get('/settings', function(req,res){
     return commonLib.verifyUserDetails(req)
         .then(function(result){
             if(result){
-                res.render('settings',{link:result});
+                res.render('settings',{data:result});
             }
             else{
                 res.send("404-sorry not here bruh :)");
@@ -57,6 +57,8 @@ app.post('/register', function(req,res){
     commonLib.registerUser(req);
     res.redirect('/verifyemail')
 });
+
+app.post('/savePreferences', commonLib.savePreferences);
 
 app.listen(process.env.PORT || 8080, function(){
     console.log("listening in port")

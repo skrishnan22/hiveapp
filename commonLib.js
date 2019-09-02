@@ -14,8 +14,30 @@ exports.verifyUserDetails = function(req){
     if(req && req.query && req.query.emailId && req.query.authcode){
         return userModel.findOne({username: req.query.emailId}).exec()
                 .then(function(objUser){
-                    if(objUser && objUser.authCode === req.query.authcode)
-                        return `/pocketAuthorize/${objUser.username}/${objUser.authCode}`;
+                    if(objUser && objUser.authCode === req.query.authcode){
+                        let objDayList = {
+                            "1" : false,
+                            "2" : false,
+                            "3" : false,
+                            "4" : false,
+                            "5" : false,
+                            "6" : false,
+                            "7" : false
+                        };
+                        if(objUser.dayList && objUser.dayList.length){
+                            objUser.dayList.forEach(function(day){
+                                objDayList[day] = true
+                            })
+                        }
+                        let objMessage = {
+                            link : `/pocketAuthorize/${objUser.username}/${objUser.authCode}`,
+                            pocketConnected : objUser.pocketCreds ? true : false,
+                            mailTime : objUser.mailTime ? objUser.mailTime : null,
+                            dayList : objDayList
+
+                        };
+                        return objMessage;
+                    }
                 })
     }
     else{
@@ -23,6 +45,18 @@ exports.verifyUserDetails = function(req){
     }
 }
 
+exports.savePreferences = function(req, res){
+    if(req.body && req.body.username){
+        return userModel.findOneAndUpdate({username:req.body.username},{dayList:req.body.dayList,mailTime:req.body.mailTime}).exec()
+                .then(function(){
+                    return res.send("Saved successfully")
+                })
+
+    }
+    else{
+        return Promise.resolve("Error occured while saving!")
+    }
+}
 function sendConfirmationEmail(emailId){
     const uniqueId = crypto.randomBytes(20).toString('hex');
     const htmlContent = "<a href='https://gethive.herokuapp.com/settings?emailId=" + emailId + "&authcode=" + uniqueId + "'>Click here to confirm email </a>";

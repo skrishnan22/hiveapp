@@ -27,62 +27,114 @@
 
     <div class="product-brand">
         <img class="logo" src="images/undraw_Lighthouse_frb8.svg" alt="logo">
-        <span class="product-name">LightHouse</span>
+        <span class="product-name">Hive</span>
     </div>
     <div class="image-container">
             <img class="img-fluid" src="images/undraw_personal_settings_kihd.svg" alt="alternative">
     </div>
     <h6 class="page-heading">Settings</h6>
     <div class="settings-container">
-            <h5> Would you like Hive to auto sync with your pocket account <a href="<%= link %>">Click Here</a></h5>
+            <%if (data.pocketConnected) { %>
+                <h5>Your Pocket account is synced with Hive <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
+                </h5>
+
+            <% } else { %> 
+                <h5> Would you like Hive to auto sync with your pocket account <a href="<%= data.link %>">Click Here</a></h5>
+            <% } %>    
             <br>
             <div class="row day-select-container">
                     <div class="col-3 text-right">
                         <h6>Choose days</h6>
                     </div>
                 <ul class="days-of-week">
-                  <li><input type="checkbox" id="checkboxOne" value="Monday"><label for="checkboxOne">Monday</label></li>
-                  <li><input type="checkbox" id="checkboxTwo" value="Tuesday" checked><label for="checkboxTwo">Tuesday</label></li>
-                  <li><input type="checkbox" id="checkboxThree" value="Wednesday" checked><label for="checkboxThree">Wednesday</label></li>
-                  <li><input type="checkbox" id="checkboxFour" value="Thursday"><label for="checkboxFour">Thursday</label></li>
-                  <li><input type="checkbox" id="checkboxFive" value="Friday"><label for="checkboxFive">Friday</label></li>
-                  <li><input type="checkbox" id="checkboxSix" value="Saturday" checked><label for="checkboxSix">Saturday</label></li>
-                  <li><input type="checkbox" id="checkboxSeven" value="Sunday"><label for="checkboxSeven">Sunday</label></li>
+                  <li><input class="weekday" type="checkbox" id="checkboxOne" value=1 <%= data.dayList["1"] ? "checked" : "" %> />><label for="checkboxOne">Monday</label></li>
+                  <li><input class="weekday" type="checkbox" id="checkboxTwo" value=2 <%= data.dayList["2"] ? "checked" : "" %>><label for="checkboxTwo">Tuesday</label></li>
+                  <li><input class="weekday" type="checkbox" id="checkboxThree" value=3 <%= data.dayList["3"] ? "checked" : "" %> ><label for="checkboxThree">Wednesday</label></li>
+                  <li><input class="weekday" type="checkbox" id="checkboxFour" value=4 <%= data.dayList["4"] ? "checked" : "" %>><label for="checkboxFour">Thursday</label></li>
+                  <li><input class="weekday" type="checkbox" id="checkboxFive" value=5 <%= data.dayList["5"] ? "checked" : "" %>><label for="checkboxFive">Friday</label></li>
+                  <li><input class="weekday" type="checkbox" id="checkboxSix" value=6 <%= data.dayList["6"] ? "checked" : "" %>><label for="checkboxSix">Saturday</label></li>
+                  <li><input class="weekday" type="checkbox" id="checkboxSeven" value=7 <%= data.dayList["7"] ? "checked" : "" %>><label for="checkboxSeven">Sunday</label></li>
                 </ul>
             </div>
     
             <div class="row">
                 <h5 class="col-3 text-right">Pick time (24hr format)</h5>
                 <select class="time-picker">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
+                    <option <%= data.mailTime == 0 ? "selected" : "" %>> 0 </option>
+                    <option <%= data.mailTime == "1" ? "selected" : "" %>> 1 </option>
+                    <option <%= data.mailTime == "2" ? "selected" : "" %>>2</option>
+                    <option <%= data.mailTime == "3" ? "selected" : "" %>>3</option>
+                    <option <%= data.mailTime == "4" ? "selected" : "" %>>4</option>
+                    <option <%= data.mailTime == "5" ? "selected" : "" %>>5</option>
+                    <option <%= data.mailTime == "6" ? "selected" : "" %>>6</option>
+                    <option <%= data.mailTime == "7" ? "selected" : "" %>>7</option>
+                    <option <%= data.mailTime == "8" ? "selected" : "" %>>8</option>
+                    <option <%= data.mailTime == "9" ? "selected" : "" %>>9</option>
+                    <option <%= data.mailTime == "10" ? "selected" : "" %>>10</option>
+                    <option <%= data.mailTime == "11" ? "selected" : "" %>>11</option>
+                    <option <%= data.mailTime == "12" ? "selected" : "" %>>12</option>
+                    <option <%= data.mailTime == "13" ? "selected" : "" %>>13</option>
+                    <option <%= data.mailTime == "14" ? "selected" : "" %>>14</option>
+                    <option <%= data.mailTime == "15" ? "selected" : "" %>>15</option>
+                    <option <%= data.mailTime == "16" ? "selected" : "" %>>16</option>
+                    <option <%= data.mailTime == "17" ? "selected" : "" %>>17</option>
+                    <option <%= data.mailTime == "18" ? "selected" : "" %>>18</option>
+                    <option <%= data.mailTime == "19" ? "selected" : "" %>>19</option>
+                    <option <%= data.mailTime == "20" ? "selected" : "" %>>20</option>
+                    <option <%= data.mailTime == "21" ? "selected" : "" %>>21</option>
+                    <option <%= data.mailTime == "22" ? "selected" : "" %>>22</option>
+                    <option <%= data.mailTime == "23" ? "selected" : "" %>>23</option>
                 </select>
             </div>
-    
+           <button class="save-settings">Update Preferences</button> 
+           <span class="save-response"></span>
     </div>
        
-          
-          
-    </body>
+</body>
+<script type="text/javascript">
+    function getselectedDays(){
+        let allCheckBoxes = document.getElementsByClassName('weekday');
+        let selectedDays = [];
+        for(let i=0; i<allCheckBoxes.length; i++){
+            if(allCheckBoxes[i].checked)
+                selectedDays.push(allCheckBoxes[i].value);
+        }
+        return selectedDays;
+    }
+    
+    function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+    
+    function postData(objData){
+        var xhr = new XMLHttpRequest();
+        document.getElementsByClassName('save-response')[0].innerText = "";
+        xhr.open('POST', '/savePreferences');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                let responseElement = document.getElementsByClassName('save-response')[0]
+                responseElement.innerText = xhr.responseText;
+                setTimeout(function () {
+                responseElement.style.display='none';
+                }, 5000);
+                responseElement.classList.add('success-response');
+
+                }
+        };
+        xhr.send(JSON.stringify(objData));
+    }
+    document.getElementsByClassName('save-settings')[0].onclick = function(){
+        let dayList = getselectedDays();
+        let mailTime = Number(document.getElementsByClassName("time-picker")[0].value);
+        let username = getUrlParameter('emailId');
+        postData({username,dayList,mailTime})
+
+    }
+</script>
+</html>
+

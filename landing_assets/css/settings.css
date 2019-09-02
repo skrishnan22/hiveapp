@@ -86,7 +86,7 @@ ul.days-of-week li input[type="checkbox"]:focus + label {
   height: 30px;
   border-radius: 25px;
   border-color: #11b1bf;
-  background: #11b1bf;
+  background: #12bbd4;
   color:  #fff;
   text-align-last:  center;
   font-weight: bold;
@@ -138,4 +138,21 @@ ul.days-of-week li input[type="checkbox"]:focus + label {
   position: absolute;
   font-size: x-large;
   font-weight: bold;
+}
+
+.success-response {
+  color : green;
+  font-weight: bold;
+}
+
+.save-settings{
+  border-radius: 10px;
+  border-color: #1bdbf8;
+  background-color: #12bbd4;
+  color: white;
+  font-size: x-large;
+}
+
+.save-settings:focus{
+  outline : none
 }

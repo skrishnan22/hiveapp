@@ -8,7 +8,10 @@ var UserModel = new Schema({
         type: Date,
         default : Date.now
     },
-    pocketCreds : {}  
+    pocketCreds : {},
+    userTimeZone : {},
+    dayList : [],
+    mailTime : Number 
 })
 
 module.exports = mongoose.model("userdetails", UserModel);
