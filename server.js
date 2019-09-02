@@ -45,9 +45,9 @@ app.get('/settings', function(req,res){
             }
         })
 })
-app.get('/pocketAuthorize', pocketLib.pocketAuthorize);
+app.get('/pocketAuthorize/:username/:authcode', pocketLib.pocketAuthorize);
 
-app.get('/pocketRedirect/:username', pocketLib.pocketRedirect);
+app.get('/pocketRedirect', pocketLib.pocketRedirect);
 
 app.get('/verifyemail', function(req, res){
     res.sendFile(path.join(__dirname,'./emailverification.html'));

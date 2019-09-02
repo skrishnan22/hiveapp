@@ -1,9 +1,9 @@
 const POCKET_CONSUMER_KEY = '87349-b4690d1647f6d4c4ac967276';
 const POCKET_AUTH_URL = 'https://getpocket.com/auth/authorize';
-const REDIRECT_URI = 'https://gethive.herokuapp.com/pocketRedirect/skrish22195@gmail.com';   
+const REDIRECT_URI = 'https://gethive.herokuapp.com/pocketRedirect';   
 var url = require('url');
 var request = require('request-promise');
-
+var userModel = require('./usermodel')
 
 exports.pocketRedirect = function(req, res){
     let referer_url = url.parse(req.headers.referer,true);
@@ -25,10 +25,14 @@ exports.pocketRedirect = function(req, res){
     return request(requestOptions)
             .then(function(objReponse){
                 objReponse = JSON.parse(objReponse);
-                if(objReponse && objReponse.access_token){
-                    console.log(objReponse.access_token)
-                    console.log("hive username",  req.params.username);
-                    res.json(objReponse);
+                if(objReponse && objReponse.access_token && req.query.emailId && req.query.authcode){
+                    console.log(JSON.stringify(req.query))
+                    return userModel.findOneAndUpdate({username:req.query.emailId, authcode:req.query.authcode},{pocketCreds:objReponse},{new:true}).exec()
+                            .then(function(objUser){
+                                if(objUser){
+                                    return res.render('settings',{link:`/pocketAuthorize/${objUser.username}/${objUser.authCode}`})
+                                }
+                            })
                 }
             })
 }
@@ -47,7 +51,7 @@ exports.pocketAuthorize = function(req, res){
         },
         body : JSON.stringify({
             "consumer_key" : POCKET_CONSUMER_KEY,
-            "redirect_uri" : REDIRECT_URI
+            "redirect_uri" : `${REDIRECT_URI}?emailId=${req.params.username}&authcode=${req.params.authcode}`
         })
     }
 
