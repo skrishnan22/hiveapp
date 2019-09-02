@@ -1,6 +1,6 @@
 const POCKET_CONSUMER_KEY = '87349-b4690d1647f6d4c4ac967276';
 const POCKET_AUTH_URL = 'https://getpocket.com/auth/authorize';
-const REDIRECT_URI = 'https://gethive.herokuapp.com/pocketRedirect';   
+const BASE_REDIRECT_URI = 'https://gethive.herokuapp.com/pocketRedirect';   
 var url = require('url');
 var request = require('request-promise');
 var userModel = require('./usermodel')
@@ -40,7 +40,7 @@ exports.pocketRedirect = function(req, res){
 
 
 exports.pocketAuthorize = function(req, res){
-
+    const REDIRECT_URI = `${BASE_REDIRECT_URI}?emailId=${req.params.username}&authcode=${req.params.authcode}`
     let requestOptions = {
         method: 'POST',
         uri : "https://getpocket.com/v3/oauth/request",
@@ -51,7 +51,7 @@ exports.pocketAuthorize = function(req, res){
         },
         body : JSON.stringify({
             "consumer_key" : POCKET_CONSUMER_KEY,
-            "redirect_uri" : `${REDIRECT_URI}?emailId=${req.params.username}&authcode=${req.params.authcode}`
+            "redirect_uri" :REDIRECT_URI
         })
     }
 
