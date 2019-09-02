@@ -6,12 +6,11 @@ var request = require('request-promise');
 var userModel = require('./usermodel')
 
 exports.pocketRedirect = function(req, res){
-    console.log(JSON.stringify(req.query));
-    console.log(req.headers.referer);
 
     let referer_url = url.parse(req.headers.referer,true);
     let request_token = referer_url.query.request_token;
-
+    let authCode = referer_url.query.authcode;
+    
     let requestOptions = {
         method: 'POST',
         uri : "https://getpocket.com/v3/oauth/authorize",
@@ -28,9 +27,9 @@ exports.pocketRedirect = function(req, res){
     return request(requestOptions)
             .then(function(objReponse){
                 objReponse = JSON.parse(objReponse);
-                if(objReponse && objReponse.access_token && req.query.emailId && req.query.authcode){
+                if(objReponse && objReponse.access_token && req.query.emailId && authCode){
                     console.log(JSON.stringify(req.query))
-                    return userModel.findOneAndUpdate({username:req.query.emailId, authcode:req.query.authcode},{pocketCreds:objReponse},{new:true}).exec()
+                    return userModel.findOneAndUpdate({username:req.query.emailId, authcode:authCode},{pocketCreds:objReponse},{new:true}).exec()
                             .then(function(objUser){
                                 if(objUser){
                                     return res.render('settings',{link:`/pocketAuthorize/${objUser.username}/${objUser.authCode}`})
