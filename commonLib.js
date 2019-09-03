@@ -87,3 +87,15 @@ function saveUserData(emailId, uniqueId){
 
     return userModel.findOneAndUpdate({username:emailId},objUser, {upsert:true}).exec()
 }
+
+exports.sendContentEmail = function(username, htmlContent){
+    const email = {
+        to : username,
+        from : 'gethive@gmail.com',
+        subject : "Hive - It's Reading Time",
+        text : "Message from Hive",
+        //html : "<strong>and easy to do anywhere, even with Node.js</strong>"
+         html : htmlContent
+    };
+     return sendGrid.send(email)
+}

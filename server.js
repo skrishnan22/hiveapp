@@ -7,6 +7,7 @@ var path = require('path');
 var commonLib = require('./commonLib');
 
 var pocketLib = require('./pocketLib');
+var Cron = require('./cron');
 var ejs = require('ejs');
 
 const db_url ="mongodb+srv://hiveadmin:UaLsFX6y8RwLPhac@hiveprod-2a2jy.mongodb.net/test?retryWrites=true&w=majority"
@@ -60,6 +61,7 @@ app.post('/register', function(req,res){
 
 app.post('/savePreferences', commonLib.savePreferences);
 
+app.get('/cron', Cron.mailSender)
 app.listen(process.env.PORT || 8080, function(){
     console.log("listening in port")
 })

@@ -11,7 +11,9 @@ var UserModel = new Schema({
     pocketCreds : {},
     userTimeZone : {},
     dayList : [],
-    mailTime : Number 
+    mailTime : Number,
+    lastMailSentTime : Date,
+    sentPocketIds : [] 
 })
 
 module.exports = mongoose.model("userdetails", UserModel);

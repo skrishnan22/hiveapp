@@ -115,14 +115,16 @@ ul.days-of-week li input[type="checkbox"]:focus + label {
 }
 
 .logo{
-  width: 7%;
+  width: 50%;
   border-radius: 50%;
 }
 
 .product-name{
-  font-size: xx-large;
+  font-size: 310%;
   color: #09b1d6;
   font-weight: bolder;
+  position: absolute;
+  top : -5%;
 
 }
 .image-container{

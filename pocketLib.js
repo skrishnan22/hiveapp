@@ -1,6 +1,8 @@
 const POCKET_CONSUMER_KEY = '87349-b4690d1647f6d4c4ac967276';
 const POCKET_AUTH_URL = 'https://getpocket.com/auth/authorize';
-const BASE_REDIRECT_URI = 'https://gethive.herokuapp.com/pocketRedirect';   
+const BASE_REDIRECT_URI = 'https://gethive.herokuapp.com/pocketRedirect'; 
+const POCKET_RETRIEVE_URL = "https://getpocket.com/v3/get";  
+
 var url = require('url');
 var request = require('request-promise');
 var userModel = require('./usermodel')
@@ -73,4 +75,29 @@ exports.pocketAuthorize = function(req, res){
     .catch(function(err){
         console.log(err);
     })
+}
+
+exports.getPocketContent = function(tokens, count, offset){
+
+    let requestOptions = {
+        method: 'POST',
+        uri : POCKET_RETRIEVE_URL,
+        headers : {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'X-Accept': 'application/json'
+    
+        },
+        body : JSON.stringify({
+            "consumer_key" : POCKET_CONSUMER_KEY,
+            "access_token" : tokens.access_token,
+            "count" : count,
+            "offset" : offset,
+            "detailType" : "complete",
+            "contentType" : "article",
+            "sort" : "newest"
+        })
+    };
+    
+   return request(requestOptions)
+
 }
