@@ -47,7 +47,7 @@ exports.verifyUserDetails = function(req){
 
 exports.savePreferences = function(req, res){
     if(req.body && req.body.username){
-        return userModel.findOneAndUpdate({username:req.body.username},{dayList:req.body.dayList,mailTime:req.body.mailTime}).exec()
+        return userModel.findOneAndUpdate({username:req.body.username},{dayList:req.body.dayList,mailTime:req.body.mailTime, userTimeZone: req.body.userTimeZone}).exec()
                 .then(function(){
                     return res.send("Saved successfully")
                 })
@@ -59,10 +59,11 @@ exports.savePreferences = function(req, res){
 }
 function sendConfirmationEmail(emailId){
     const uniqueId = crypto.randomBytes(20).toString('hex');
-    const htmlContent = "<a href='https://gethive.herokuapp.com/settings?emailId=" + emailId + "&authcode=" + uniqueId + "'>Click here to confirm email </a>";
+    const htmlContent = "<a href='https://www.gethive.app/settings?emailId=" + emailId + "&authcode=" + uniqueId + "'>Click here to confirm email </a>";
     const email = {
         to : emailId,
         from : 'gethive@gmail.com',
+        fromname : "Hive App",
         subject : 'Hive - Email Confirmation',
         text : "Click on the link to confirm your email",
         //html : "<strong>and easy to do anywhere, even with Node.js</strong>"
@@ -88,14 +89,18 @@ function saveUserData(emailId, uniqueId){
     return userModel.findOneAndUpdate({username:emailId},objUser, {upsert:true}).exec()
 }
 
-exports.sendContentEmail = function(username, htmlContent){
+exports.sendContentEmail = function(username, htmlContent, title){
     const email = {
         to : username,
-        from : 'gethive@gmail.com',
-        subject : "Hive - It's Reading Time",
+        from : {
+            email : "gethive@gmail.com",
+            name : "Hive App"
+        },
+        subject : "Hive - " + title,
         text : "Message from Hive",
         //html : "<strong>and easy to do anywhere, even with Node.js</strong>"
          html : htmlContent
     };
+    console.log("mail sent to", username)
      return sendGrid.send(email)
 }

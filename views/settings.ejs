@@ -132,7 +132,8 @@
         let dayList = getselectedDays();
         let mailTime = Number(document.getElementsByClassName("time-picker")[0].value);
         let username = getUrlParameter('emailId');
-        postData({username,dayList,mailTime})
+        let userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        postData({username,dayList,mailTime, userTimeZone})
 
     }
 </script>
