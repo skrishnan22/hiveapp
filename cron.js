@@ -99,7 +99,7 @@ function sendMailAndUpdateUser(username, articleId, articleUrl, articleTitle){
 }
 
 var mailSenderCron	= new CronJob({
-    cronTime	:'* */1 * * * *',
+    cronTime	:'* */15 * * * *',
     onTick		:function(){
             mailSender();
     },
