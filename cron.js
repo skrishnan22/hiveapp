@@ -4,7 +4,7 @@ var PocketLib = require("./pocketLib");
 var CommonLib = require("./commonLib");
 var request = require('request-promise');
 var moment = require("moment-timezone");
-
+var CronJob = require("cron").CronJob;
 function mailSender(){
     console.log("mail send cron started")
     return getUsers()
