@@ -44,10 +44,13 @@ function postPushNotification(pushSubscription){
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
-
+            alert("subscription saved");
             }
     };
+
     xhr.send(JSON.stringify({username,pushSubscription}));
+    alert("subscription sent");
+
 }
 
 document.getElementsByClassName('save-settings')[0].onclick = function(){
@@ -99,6 +102,7 @@ function pushNotificationSubscription(){
             return registration;
             })
             .then(function(registration){
+                alert("service worker registered");
                 const objSubscribe = {
                     userVisibleOnly: true,
                     applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)                
@@ -106,6 +110,7 @@ function pushNotificationSubscription(){
                 return registration.pushManager.subscribe(objSubscribe);
             })
             .then(function(pushSubscription) {
+                alert("push subscribe done")
                return postPushNotification(pushSubscription); 
             })
             .catch(function(err) {
@@ -120,7 +125,7 @@ if(('serviceWorker' in navigator) && ('PushManager' in window)){
             askPermission()
                 .then(function(permissionResult){
                             if(permissionResult === 'granted'){
-                                    return pushNotificationSubscription()
+                                    return pushNotificationSubscription();
                             }
                 })
                 .catch(function(err){

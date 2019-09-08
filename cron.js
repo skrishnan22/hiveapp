@@ -55,6 +55,7 @@ function mailSender(){
            })
            .then(function(){
                console.log("mail send cron completed");
+               return Promise.resolve();
            }) 
            .catch(function(err){
                console.log(err);
@@ -122,7 +123,7 @@ function sendMailAndUpdateUser(username, articleId, articleUrl, articleTitle){
 }
 
 var mailSenderCron	= new CronJob({
-    cronTime	:'* */15 * * * *',
+    cronTime	:'0 */15 * * * *',
     onTick		:function(){
             mailSender();
     },
