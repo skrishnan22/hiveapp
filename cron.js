@@ -18,22 +18,36 @@ function mailSender(){
     return getUsers()
            .then(function(arrUsers){
               return Promise.map(arrUsers,function(objUser){
+                let mailSentToday = false;
                 let now = moment().tz(objUser.userTimeZone);
-                if(objUser.dayList.includes(now.isoWeekday()) && objUser.mailTime === now.hour()){
+                if(objUser.lastMailSentTime){
+                    let prevMailTime = moment(objUser.lastMailSentTime).tz(objUser.userTimeZone);
+                    let duration = moment.duration(now.diff(prevMailTime, "hours"));
+                    if(duration <= 2){
+                        mailSentToday = true;
+                    }
+
+                }
+                if(objUser.dayList.includes(now.isoWeekday()) && objUser.mailTime === now.hour() && !mailSentToday){
                     return getArticleToSend(objUser, 0)
                                 .then(function(mailData){
                                     if(mailData && mailData.articleId && mailData.articleUrl){
                                        return sendMailAndUpdateUser(objUser.username, mailData.articleId, mailData.articleUrl, mailData.articleTitle)
                                                 .then(function(){
-                                                    if(objUser.pushSubscription){
+                                                    if(objUser.pushSubscription && objUser.pushSubscription.length){
                                                         let notificationData = {
                                                                                   articleTitle : mailData.articleTitle,
                                                                                   articleUrl :   mailData.articleUrl
                                                                                 }
-                                                        return webPush.sendNotification(objUser.pushSubscription, JSON.stringify(notificationData))
-                                                                      .then(function(){
-                                                                          console.log('web notification sent to user', objUser.username);
-                                                                      })              
+
+                                                        return Promise.map(objUser.pushSubscription,function(pushSubscription){
+                                                            return webPush.sendNotification(pushSubscription, JSON.stringify(notificationData))
+                                                            .then(function(){
+                                                                console.log('web notification sent to user', objUser.username);
+                                                                return Promise.resolve()
+                                                            })
+                                                        })                        
+              
                                                     }
                                                 })
                                     }

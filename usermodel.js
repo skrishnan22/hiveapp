@@ -14,7 +14,7 @@ var UserModel = new Schema({
     mailTime : Number,
     lastMailSentTime : Date,
     sentPocketIds : [],
-    pushSubscription : {} 
+    pushSubscription : [] 
 })
 
 module.exports = mongoose.model("userdetails", UserModel);

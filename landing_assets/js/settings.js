@@ -93,7 +93,18 @@ function askPermission() {
       return permissionResult;
     });
 }
+function sendSubscriptionToServer(registration){
+    const objSubscribe = {
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)                
+    };
+    return registration.pushManager.subscribe(objSubscribe)
+            .then(function(pushSubscription){
+                //alert("push subscribe done");
+                return postPushNotification(pushSubscription);                          
+            })
 
+}
 function pushNotificationSubscription(){
 
     return navigator.serviceWorker.register('js/service-worker.js')
@@ -102,50 +113,35 @@ function pushNotificationSubscription(){
             return registration;
             })
             .then(function(registration){
-                alert("service worker registered");
+                //alert("service worker registered");
                 let serviceWorker;
                 if (registration.installing) {
                     serviceWorker = registration.installing;
-                    alert('Service worker installing');
+                    //alert('Service worker installing');
                 } else if (registration.waiting) {
                     serviceWorker = registration.waiting;
-                    alert('Service worker installed & waiting');
+                    //alert('Service worker installed & waiting');
                 } else if (registration.active) {
                     serviceWorker = registration.active;
-                    alert('Service worker active');
-                    alert("Just now activated. now we can subscribe for push notification")
-                    const objSubscribe = {
-                        userVisibleOnly: true,
-                        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)                
-                    };
-                    return registration.pushManager.subscribe(objSubscribe)
-                            .then(function(pushSubscription){
-                                alert("push subscribe done");
-                                return postPushNotification(pushSubscription);                          
-                            })
+                    //alert('Service worker active');
+                    //alert("Just now activated. now we can subscribe for push notification")
+                   return sendSubscriptionToServer(registration);
+
                 }
                 if(serviceWorker){
-                        alert("sw current state", serviceWorker.state);
+                        //alert("sw current state", serviceWorker.state);
                         serviceWorker.addEventListener("statechange", function(workerEvent) {
-                        alert("sw statechange : ", workerEvent.target.state);
+                        //alert("sw statechange : ", workerEvent.target.state);
                         if (workerEvent.target.state == "activated") {
-                            alert("Just now activated. now we can subscribe for push notification")
-                            const objSubscribe = {
-                                userVisibleOnly: true,
-                                applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)                
-                            };
-                            return registration.pushManager.subscribe(objSubscribe)
-                                    .then(function(pushSubscription){
-                                        alert("push subscribe done");
-                                        return postPushNotification(pushSubscription);                          
-                                    })
+                            //alert("Just now activated. now we can subscribe for push notification")
+                            return sendSubscriptionToServer(registration);
                         }
                     });
                 }
                 
             })
             .catch(function(err) {
-                alert(err);
+               // alert(err);
             console.error('Unable to register service worker.', err);
             });
   

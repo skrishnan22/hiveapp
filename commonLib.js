@@ -1,6 +1,6 @@
 var sendGrid = require('@sendgrid/mail');
 var crypto = require('crypto');
-const SEND_GRID_API = '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';
+const SEND_GRID_API = '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';
 var userModel = require('./usermodel');
 sendGrid.setApiKey(SEND_GRID_API);
 
@@ -60,7 +60,7 @@ exports.savePreferences = function(req, res){
 
 exports.savePushNotification = function(req,res){
     if(req.body && req.body.username && req.body.pushSubscription){
-        return userModel.findOneAndUpdate({username:req.body.username},{pushSubscription:req.body.pushSubscription})
+        return userModel.findOneAndUpdate({username:req.body.username},{$push : {pushSubscription:req.body.pushSubscription}})
                     .then(function(){
                         return res.send("Save successfully")
                     })
