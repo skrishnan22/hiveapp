@@ -44,12 +44,12 @@ function postPushNotification(pushSubscription){
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(xhr.responseText);
-            alert("subscription saved");
+            //alert("subscription saved");
             }
     };
 
     xhr.send(JSON.stringify({username,pushSubscription}));
-    alert("subscription sent");
+    //alert("subscription sent");
 
 }
 
