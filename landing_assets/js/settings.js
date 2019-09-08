@@ -103,15 +103,46 @@ function pushNotificationSubscription(){
             })
             .then(function(registration){
                 alert("service worker registered");
-                const objSubscribe = {
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)                
-                };
-                return registration.pushManager.subscribe(objSubscribe);
-            })
-            .then(function(pushSubscription) {
-                alert("push subscribe done")
-               return postPushNotification(pushSubscription); 
+                let serviceWorker;
+                if (registration.installing) {
+                    serviceWorker = registration.installing;
+                    alert('Service worker installing');
+                } else if (registration.waiting) {
+                    serviceWorker = registration.waiting;
+                    alert('Service worker installed & waiting');
+                } else if (registration.active) {
+                    serviceWorker = registration.active;
+                    alert('Service worker active');
+                    alert("Just now activated. now we can subscribe for push notification")
+                    const objSubscribe = {
+                        userVisibleOnly: true,
+                        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)                
+                    };
+                    return registration.pushManager.subscribe(objSubscribe)
+                            .then(function(pushSubscription){
+                                alert("push subscribe done");
+                                return postPushNotification(pushSubscription);                          
+                            })
+                }
+                if(serviceWorker){
+                        alert("sw current state", serviceWorker.state);
+                        serviceWorker.addEventListener("statechange", function(workerEvent) {
+                        alert("sw statechange : ", workerEvent.target.state);
+                        if (workerEvent.target.state == "activated") {
+                            alert("Just now activated. now we can subscribe for push notification")
+                            const objSubscribe = {
+                                userVisibleOnly: true,
+                                applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)                
+                            };
+                            return registration.pushManager.subscribe(objSubscribe)
+                                    .then(function(pushSubscription){
+                                        alert("push subscribe done");
+                                        return postPushNotification(pushSubscription);                          
+                                    })
+                        }
+                    });
+                }
+                
             })
             .catch(function(err) {
                 alert(err);
