@@ -114,6 +114,7 @@ function pushNotificationSubscription(){
                return postPushNotification(pushSubscription); 
             })
             .catch(function(err) {
+                alert(err);
             console.error('Unable to register service worker.', err);
             });
   
