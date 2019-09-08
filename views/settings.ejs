@@ -91,51 +91,7 @@
     </div>
        
 </body>
-<script type="text/javascript">
-    function getselectedDays(){
-        let allCheckBoxes = document.getElementsByClassName('weekday');
-        let selectedDays = [];
-        for(let i=0; i<allCheckBoxes.length; i++){
-            if(allCheckBoxes[i].checked)
-                selectedDays.push(allCheckBoxes[i].value);
-        }
-        return selectedDays;
-    }
-    
-    function getUrlParameter(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    var results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
-    
-    function postData(objData){
-        var xhr = new XMLHttpRequest();
-        document.getElementsByClassName('save-response')[0].innerText = "";
-        xhr.open('POST', '/savePreferences');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log(xhr.responseText);
-                let responseElement = document.getElementsByClassName('save-response')[0]
-                responseElement.innerText = xhr.responseText;
-                setTimeout(function () {
-                responseElement.style.display='none';
-                }, 5000);
-                responseElement.classList.add('success-response');
+<script src="js/settings.js" type="text/javascript"></script>
 
-                }
-        };
-        xhr.send(JSON.stringify(objData));
-    }
-    document.getElementsByClassName('save-settings')[0].onclick = function(){
-        let dayList = getselectedDays();
-        let mailTime = Number(document.getElementsByClassName("time-picker")[0].value);
-        let username = getUrlParameter('emailId');
-        let userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        postData({username,dayList,mailTime, userTimeZone})
-
-    }
-</script>
 </html>
 

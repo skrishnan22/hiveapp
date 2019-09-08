@@ -5,6 +5,14 @@ var CommonLib = require("./commonLib");
 var request = require('request-promise');
 var moment = require("moment-timezone");
 var CronJob = require("cron").CronJob;
+
+var webPush = require("web-push");
+const VAPID_KEYS = {
+                    publicKey:"BF8gguMdlPJJp4rs8AatFewCjeTP31vWWOloE4r1i1Rv902pO1O12klx9AmZn4DAvmIQJRU5B6DHat3pqNm60aQ",
+                    privateKey: "uq9FLhFBYZtKWKH2gbsdC42qN5DzZ03BmNGkDk8mETg"
+                }
+webPush.setVapidDetails("mailto:skrish22195@gmail.com", VAPID_KEYS.publicKey, VAPID_KEYS.privateKey);
+
 function mailSender(){
     console.log("mail send cron started")
     return getUsers()
@@ -15,7 +23,19 @@ function mailSender(){
                     return getArticleToSend(objUser, 0)
                                 .then(function(mailData){
                                     if(mailData && mailData.articleId && mailData.articleUrl){
-                                       return sendMailAndUpdateUser(objUser.username, mailData.articleId, mailData.articleUrl, mailData.articleTitle);
+                                       return sendMailAndUpdateUser(objUser.username, mailData.articleId, mailData.articleUrl, mailData.articleTitle)
+                                                .then(function(){
+                                                    if(objUser.pushSubscription){
+                                                        let notificationData = {
+                                                                                  articleTitle : mailData.articleTitle,
+                                                                                  articleUrl :   mailData.articleUrl
+                                                                                }
+                                                        return webPush.sendNotification(objUser.pushSubscription, JSON.stringify(notificationData))
+                                                                      .then(function(){
+                                                                          console.log('web notification sent to user', objUser.username);
+                                                                      })              
+                                                    }
+                                                })
                                     }
                                     else{
                                         return Promise.resolve();
@@ -46,7 +66,6 @@ function getUsers(){
 }
 
 function getArticleToSend(objUser, offset){
-    var pocketResponse;
     return PocketLib.getPocketContent(objUser.pocketCreds, 10, offset)
             .then(function(pocketResponse){
                 pocketResponse = JSON.parse(pocketResponse);
@@ -92,10 +111,14 @@ function sendMailAndUpdateUser(username, articleId, articleUrl, articleTitle){
     return request(articleUrl)
             .then(function(htmlContent){
                 return CommonLib.sendContentEmail(username, htmlContent, articleTitle)
-                        .then(function(){
-                            return saveUserData(username, articleId)
-                        });
-            });
+            })
+            .catch(function(err){
+                console.log(err)
+            })
+            .finally(function(){
+                    return saveUserData(username, articleId);
+                
+            })
 }
 
 var mailSenderCron	= new CronJob({

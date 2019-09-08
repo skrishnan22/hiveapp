@@ -57,6 +57,20 @@ exports.savePreferences = function(req, res){
         return Promise.resolve("Error occured while saving!")
     }
 }
+
+exports.savePushNotification = function(req,res){
+    if(req.body && req.body.username && req.body.pushSubscription){
+        return userModel.findOneAndUpdate({username:req.body.username},{pushSubscription:req.body.pushSubscription})
+                    .then(function(){
+                        return res.send("Save successfully")
+                    })
+                    .catch(function(){
+                        return res.send("Error occured!")
+                    })
+    }
+
+    return res.send("Could not save");
+}
 function sendConfirmationEmail(emailId){
     const uniqueId = crypto.randomBytes(20).toString('hex');
     const htmlContent = "<a href='https://www.gethive.app/settings?emailId=" + emailId + "&authcode=" + uniqueId + "'>Click here to confirm email </a>";
@@ -104,3 +118,4 @@ exports.sendContentEmail = function(username, htmlContent, title){
     console.log("mail sent to", username)
      return sendGrid.send(email)
 }
+

@@ -61,6 +61,8 @@ app.post('/register', function(req,res){
 
 app.post('/savePreferences', commonLib.savePreferences);
 
+app.post('/savePushNotification', commonLib.savePushNotification);
+
 //app.get('/cron', Cron.mailSender)
 app.listen(process.env.PORT || 8080, function(){
     console.log("listening in port")
