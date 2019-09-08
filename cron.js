@@ -92,7 +92,7 @@ function getArticleToSend(objUser, offset){
                         return {
                                 articleUrl : pocketResponse.list[arrArticleIds[0]].resolved_url,
                                 articleId : arrArticleIds[0],
-                                articleTitle : pocketResponse.list[unsentArticles[0]].resolved_title 
+                                articleTitle : pocketResponse.list[arrArticleIds[0]].resolved_title 
                             }
                     }
                 }
