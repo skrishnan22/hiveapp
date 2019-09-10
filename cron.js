@@ -77,7 +77,7 @@ function mailSender(){
 }
 
 function getUsers(){
-    return userModel.find({username:'skrish22195@gmail.com',pocketCreds:{$exists:true}}).exec();
+    return userModel.find({pocketCreds:{$exists:true}}).exec();
 }
 
 function getArticleToSend(objUser, offset){
