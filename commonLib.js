@@ -4,7 +4,7 @@ const SEND_GRID_API = 'SG.hY20MeL3R0yJLdoKLjMWgA.khTAH5AyrtDdc07M-5AsvimfOyQBRoO
 var userModel = require('./usermodel');
 let fs = require('fs'); 
 sendGrid.setApiKey(SEND_GRID_API);
-let confirmation_email_template = fs.readFileSync("./confirmationemail.html","utf-8");
+let confirmation_email_template = fs.readFileSync("./confirmEmail.html","utf-8");
 exports.registerUser = function(req){
     if(req && req.body && req.body.emailId){
         return sendConfirmationEmail(req.body.emailId)
@@ -78,7 +78,7 @@ function sendConfirmationEmail(emailId){
     const htmlContent = confirmation_email_template.replace("[[hiveSettingsLink]]", settingsLink);
     const email = {
         to : emailId,
-        from : 'getthehiveapp@gmail.com',
+        from : 'hello@gethive.app',
         fromname : "Hive App",
         subject : 'Hive - Email Confirmation',
         text : "Click on the link to confirm your email",
