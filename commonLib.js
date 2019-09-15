@@ -78,7 +78,7 @@ function sendConfirmationEmail(emailId){
     const htmlContent = confirmation_email_template.replace("[[hiveSettingsLink]]", settingsLink);
     const email = {
         to : emailId,
-        from : 'hello@gethive.app',
+        from : 'gethive@gmail.com',
         fromname : "Hive App",
         subject : 'Hive - Email Confirmation',
         text : "Click on the link to confirm your email",
@@ -109,7 +109,7 @@ exports.sendContentEmail = function(username, htmlContent, title){
     const email = {
         to : username,
         from : {
-            email : "hello@gethive.app",
+            email : "gethive@gmail.com",
             name : "Hive App"
         },
         subject : "Hive - " + title,
