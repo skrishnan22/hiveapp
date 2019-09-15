@@ -66,7 +66,15 @@ html {
 	border-color: #00bfd8;
 	font-weight: bold;
 	margin-left: 5%;
+	margin-top: 5%;
 }
+
+
+
+.logo{
+	max-width: 75%;
+	max-height: 20%;
+  }
 
 .register-button:focus{
 	outline: none;
