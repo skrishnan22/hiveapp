@@ -1,6 +1,6 @@
 var sendGrid = require('@sendgrid/mail');
 var crypto = require('crypto');
-const SEND_GRID_API = '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';
+const SEND_GRID_API = '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';
 var userModel = require('./usermodel');
 let fs = require('fs'); 
 sendGrid.setApiKey(SEND_GRID_API);
@@ -109,7 +109,7 @@ exports.sendContentEmail = function(username, htmlContent, title){
     const email = {
         to : username,
         from : {
-            email : "gethive@gmail.com",
+            email : "hello@gethive.app",
             name : "Hive App"
         },
         subject : "Hive - " + title,
