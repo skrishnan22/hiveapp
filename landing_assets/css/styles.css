@@ -48,7 +48,39 @@ html {
     width: 100%;
 	height: 100%;
 }
+.email-input {
+	width: 300px;
+	height: 42px;
+	border-radius: 14px;
+	border-style: solid;
+	text-align: center;
+	border-color: turquoise;
+}
 
+.register-button {
+	padding: 5px;
+	width : 20%;
+	border-radius: 10px;
+	background-color:#00bfd8;
+	color: white;
+	border-color: #00bfd8;
+	font-weight: bold;
+	margin-left: 5%;
+}
+
+.register-button:focus{
+	outline: none;
+}
+
+.register-button:hover{
+	background-color: #fff;
+	color: #00bfd8;
+}
+
+.highlight{
+	color : #00bfd8;
+	font-weight : bold;
+}
 body, p {
 	color: #626262; 
 	font: 400 0.875rem/1.375rem "Raleway", sans-serif;
@@ -2194,39 +2226,7 @@ a:hover.back-to-top {
 	}
 	/* end of extra pages */
 
-	.email-input {
-		width: 300px;
-		height: 42px;
-		border-radius: 14px;
-		border-style: solid;
-		text-align: center;
-		border-color: turquoise;
-	}
-
-	.register-button {
-		padding: 5px;
-		width : 20%;
-		border-radius: 10px;
-		background-color:#00bfd8;
-		color: white;
-		border-color: #00bfd8;
-		font-weight: bold;
-		margin-left: 5%;
-	}
-
-	.register-button:focus{
-		outline: none;
-	}
-
-	.register-button:hover{
-		background-color: #fff;
-		color: #00bfd8;
-	}
-
-	.highlight{
-		color : #00bfd8;
-		font-weight : bold;
-	}
+	
 	
 }
 /* end of min-width width 1200px */
