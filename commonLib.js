@@ -2,8 +2,9 @@ var sendGrid = require('@sendgrid/mail');
 var crypto = require('crypto');
 const SEND_GRID_API = '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';
 var userModel = require('./usermodel');
+let fs = require('fs'); 
 sendGrid.setApiKey(SEND_GRID_API);
-
+let confirmation_email_template = fs.readFileSync("./confirmationemail.html","utf-8");
 exports.registerUser = function(req){
     if(req && req.body && req.body.emailId){
         return sendConfirmationEmail(req.body.emailId)
@@ -73,10 +74,11 @@ exports.savePushNotification = function(req,res){
 }
 function sendConfirmationEmail(emailId){
     const uniqueId = crypto.randomBytes(20).toString('hex');
-    const htmlContent = "<a href='https://www.gethive.app/settings?emailId=" + emailId + "&authcode=" + uniqueId + "'>Click here to confirm email </a>";
+    const settingsLink = "'https://www.gethive.app/settings?emailId=" + emailId + "&authcode=" + uniqueId + "'";
+    const htmlContent = confirmation_email_template.replace("[[hiveSettingsLink]]", settingsLink);
     const email = {
         to : emailId,
-        from : 'gethive@gmail.com',
+        from : 'hello@gethiv.app',
         fromname : "Hive App",
         subject : 'Hive - Email Confirmation',
         text : "Click on the link to confirm your email",

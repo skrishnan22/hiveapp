@@ -40,7 +40,8 @@ exports.pocketRedirect = function(req, res){
                                 }
                             })
                 }
-                return res.render('errorpage');
+                return res.sendFile(path.join(__dirname,'./errorPage.html'));
+
 
             })
 }

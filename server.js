@@ -42,7 +42,7 @@ app.get('/settings', function(req,res){
                 res.render('settings',{data:result});
             }
             else{
-                res.send("404-sorry not here bruh :)");
+                res.sendFile(path.join(__dirname,'./errorPage.html'));
             }
         })
 })
