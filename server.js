@@ -10,7 +10,7 @@ var pocketLib = require('./pocketLib');
 var Cron = require('./cron');
 var ejs = require('ejs');
 
-const db_url ="mongodb+srv://hiveadmin:UaLsFX6y8RwLPhac@hiveprod-2a2jy.mongodb.net/test?retryWrites=true&w=majority"
+const db_url = process.env.DB_URL;
 mongoose.connect(db_url,{useNewUrlParser:true});
 
 var db = mongoose.connection;

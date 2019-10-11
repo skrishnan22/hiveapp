@@ -1,6 +1,6 @@
 var sendGrid = require('@sendgrid/mail');
 var crypto = require('crypto');
-const SEND_GRID_API = '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';
+const SEND_GRID_API = process.env.SEND_GRID_API;
 var userModel = require('./usermodel');
 let fs = require('fs'); 
 sendGrid.setApiKey(SEND_GRID_API);

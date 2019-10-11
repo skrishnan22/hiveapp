@@ -1,4 +1,4 @@
-const VAPID_PUBLIC_KEY = 'BF8gguMdlPJJp4rs8AatFewCjeTP31vWWOloE4r1i1Rv902pO1O12klx9AmZn4DAvmIQJRU5B6DHat3pqNm60aQ';
+const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
 function getselectedDays(){
     let allCheckBoxes = document.getElementsByClassName('weekday');
     let selectedDays = [];

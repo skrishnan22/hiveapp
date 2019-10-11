@@ -1,4 +1,4 @@
-const POCKET_CONSUMER_KEY = '87349-b4690d1647f6d4c4ac967276';
+const POCKET_CONSUMER_KEY = process.env.POCKET_CONSUMER_KEY;
 const POCKET_AUTH_URL = 'https://getpocket.com/auth/authorize';
 const BASE_REDIRECT_URI = 'https://www.gethive.app/pocketRedirect'; 
 const POCKET_RETRIEVE_URL = "https://getpocket.com/v3/get";  

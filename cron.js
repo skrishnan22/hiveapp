@@ -8,8 +8,8 @@ var CronJob = require("cron").CronJob;
 
 var webPush = require("web-push");
 const VAPID_KEYS = {
-                    publicKey:"BF8gguMdlPJJp4rs8AatFewCjeTP31vWWOloE4r1i1Rv902pO1O12klx9AmZn4DAvmIQJRU5B6DHat3pqNm60aQ",
-                    privateKey: "uq9FLhFBYZtKWKH2gbsdC42qN5DzZ03BmNGkDk8mETg"
+                    publicKey: process.env.VAPID_PUBLIC_KEY,
+                    privateKey: process.env.VAPID_PRIVATE_KEY
                 }
 webPush.setVapidDetails("mailto:skrish22195@gmail.com", VAPID_KEYS.publicKey, VAPID_KEYS.privateKey);
 
